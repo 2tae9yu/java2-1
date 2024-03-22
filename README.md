@@ -3,7 +3,23 @@
 ## 3월 22일 강의
 내용 정리
 
-Create Java Project
+1. Ctrl + Shift + P
+2. Java: Create Java Project
+3. No builds tools
+4. Directory 설정
+5. .vscode, bin, lib, src 파일 복사
+6. 기존 폴더에 붙여넣은 후 커밋
+
+자바 기본 구조
+```java
+클래스 {
+    변수
+    상수
+    함수(메소드) 등
+}
+```
+
+주석 단축키 Ctrl + ?
 
 ```java
 public class App {
@@ -15,6 +31,14 @@ public class App {
 
 ## 3월 15일 강의
 내용 정리
+
+1. F1
+2. Git: Clone
+3. GitHub에서 복사한 주소 붙여넣기
+4. 변경 사항 - 변경 내용 스테이징
+5. 메세지 작성 후 커밋
+
+확장 프로그램 Git Graph를 통해 작업 확인 가능
 
 ```java
 public class Hello {
