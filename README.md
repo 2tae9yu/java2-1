@@ -10,6 +10,8 @@
 5. .vscode, bin, lib, src 파일 복사
 6. 기존 폴더에 붙여넣은 후 커밋
 
+주석 단축키 Ctrl + ?
+
 자바 기본 구조
 ```java
 클래스 {
@@ -18,8 +20,6 @@
     함수(메소드) 등
 }
 ```
-
-주석 단축키 Ctrl + ?
 
 ```java
 public class App {
