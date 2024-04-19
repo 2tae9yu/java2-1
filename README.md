@@ -1,5 +1,68 @@
 # 이태규 학번 202330124
 
+## 4월 19일 강의
+> 내용 정리
+
+추상 클래스: 상속에서 슈퍼 클래스로 사용되는 클래스
+추상 메소드: 선언은 되어 있으나 코드가 구현되어 있지 않은, 껍데기만 있는 메소드. 추상 메소드를 작성하려먼 abstract 키워드와 함께 원형만 선언하고 코드는 작성하지 않는다.
+
+추상 클래스가 되는 경우는 2가지로서, 모드 abstract 키워드로 선언해야 한다.
+
+- 추상 메소드를 포함하는 클래스
+```java
+abstract class shape { // 추상 클래스 선언
+    public shape() { }
+    public void paint() { draw(); }
+    abstract public void draw(); // 추상 메소드 선언
+}
+```
+- 추상 메소드가 없지만 abstract로 선언한 클래스
+```java
+abstract class MyComponent { // 추상 클래스 선언
+    String name;
+    public void load(String name) {
+        this.name = name;
+    }
+}
+```
+
+추상 클래스를 단순히 상속받는 서브 클래스는 추상 클래스가 된다.(추상 클래스의 추상 메소드를 그대로 상속받기 때문)
+그러므로 서브 클래스에 abstract를 붙여 추상 클래스임을 명시해야 컴파일 오류가 발생하지 않는다.
+
+자바의 인터페이스
+- interface 키워드를 사용하여 클래스를 선언하듯이 선언
+```java
+interface PhoneInterface { // 인터페이스 선언
+    public static final int TIMEOUT = 10000; // 상수 필드, public static final 생략 가능
+    public abstract void sendCall(); // 추상 메소드, public abstract 생략 가능
+    public abstract void receiveCall(); // 추상 메소드, public abstract 생략 가능
+    public default void printLogo() { // default 메소드, public 생략 가능
+        System.out.println("** Phone **");
+    };
+}
+```
+- 인터페이스는 객체를 생성할 수 없다
+- 인터페이스 타입의 레퍼런스 변수는 선언 가능하다
+- 인터페이스끼리 상속된다
+- 인터페이스를 상속받아 클래스를 작성하면 인터페이스의 모든 추상 메소드를 구현하여야 한다
+
+자바의 패키지
+- 서로 관련 있는 클래스나 인터페이스의 컴파일된 클래스(.class) 파일들을 한 곳에 묶어 놓은 것
+
+- 모듈: 클래스 파일들을 묶어 놓은 패키지들을 모듈이라는 단위로 묶어 놓은 것
+- **현실적으로 모듈로 나누어 자바 프로그램을 작성할 필요 없음**
+
+- import 문
+```java
+import java.util.Scanner;
+public class ImportExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(scanner.next());
+    }
+}
+```
+
 ## 4월 12일 강의
 > 내용 정리
 
