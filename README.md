@@ -1,5 +1,143 @@
 # 이태규 학번 202330124
 
+## 5월 17일 강의
+> 내용 정리
+
+**컨테이너와 배치 관리자**
+배치 관리자 대표 유형 4가지
+
+1. FlowLayout 배치관리자
+- 컴포넌트가 삽입되는 순서대로 왼쪽에서 오른쪽으로 배치
+- 배치할 공간이 없으면 아래로 내려와서 반복한다
+
+2. BorderLayout 배치관리자
+- 컨테이너의 공간을 동(EAST), 서(WEST), 남(SOUTH), 북(NORTH), 중앙(CENTER)의 5개 영역으로 나눔
+- 5개 영역 중 응용프로그램에서 지정한 영역에 컴포넌트 배치
+
+3. GridLayout 배치관리자
+- 컨테이너를 프로그램에서 설정한 동일한 크기의 2차원 격자로 나눔
+- 컴포넌트는 삽입 순서대로 좌에서 우로, 다시 위에서 아래로 배치
+
+4. CardLayout 배치관리자
+- 컨테이너의 공간에 카드를 쌓아 놓은 듯이 컴포넌트를 포개어 배치
+
+java.awt 패키지에 구현되어 있음
+
+**컨테이너의 디폴트 배치관리자**
+- 컨테이너 생성시 자동으로 생성되는 배치관리자
+
+AWT와 스윙 컨테이너 | 디폴트 배치관리자
+:---: | :---:
+`Window`, `JWindow` | `BorderLayout`
+`Frane`, `JFrame` | `BorderLayout`
+`Dialog`, `JDialog` | `BorderLayout`
+`Panel`, `JPanel` | `FlowLayout`
+`Applet`, `JApplet` | `FlowLayout`
+
+**컨테이너에 새로운 배치관리자 설정**
+- setLayout(LayoutManager lm) 메소드 호출
+    - lm을 새로운 배치관리자로 설정
+
+**FlowLayout 배치관리자**
+- 배치방법
+    - 컴포넌트를 컨테이너 내에 왼쪽에서 오른쪽으로 배치
+        - 다시 위에서 아래로 순서대로 배치
+
+```java
+container.setLayout(new FlowLayout());
+container.add(new JButton("add"));
+container.add(new JButton("sub"));
+container.add(new JButton("mul"));
+container.add(new JButton("div"));
+container.add(new JButton("Calculate"));
+```
+
+**FlowLayout의 생성자**
+- 생성자
+    - FlowLayout()
+    - FlowLayout(int align, int hGap, int vGap)
+        - align: 컴포넌트를 정렬하는 방법 지정, 왼쪽 정렬(FlowLayout.LEFT), 오른쪽 정렬(FlowLayout.RIGHT), 중앙 정렬(FlowLayout.CENTER(디폴트))
+        - hGap: 좌우 두 컴포넌트 사이의 수평 간격, 픽셀 단위, 디폴트는 5
+        - vGap: 좌우 두 컴포넌트 사이의 수직 간격, 픽셀 단위, 디폴트는 5
+
+**BorderLayout 배치관리자**
+- 배치방법
+    - 컨테이너 공간을 5 구역으로 분할, 배치
+        - 동, 서, 남, 북, 중앙
+
+    - 배치 방법
+        - add(Component comp, int index)
+            - comp를 index의 공간에 배치
+
+**BorderLayout 생성자와 add() 메소드**
+- 생성자
+    - BorderLayout()
+    - BorderLayout(int hGap, int vGap)
+        - hGap: 좌우 두 컴포넌트 사이의 수평 간격, 픽셀 단위(디폴트: 0)
+        - vGap: 상하 두 컴포넌트 사이의 수직 간격, 픽셀 단위(디폴트: 0)
+
+- add() 메소드
+    - void add(Component comp, int index)
+        - comp 컴포넌트를 index 위치에 삽입한다.
+        - index: 컴포넌트의 위치
+            1. 동: BorderLayout.EAST
+            2. 서: BorderLyaout.WEST
+            3. 남: BorderLayout.SOUTH
+            4. 북: BorderLayout.NORTH
+            5. 중앙: BorderLayout.CENTER
+
+**GridLayout 배치관리자**
+- 배치방법
+    - 컨테이너 공간을 동일한 사각형 격자(그리드)로 분할하고 각 셀에 컴포넌트 하나씩 배치
+        - 생성자에 행수와 열수 지정
+        - 셀에 왼쪽에서 오른쪽으로, 다시 위에서 아래로 순서대로 배치
+
+**GridLayout 생성자**
+- 생성자
+    - GridLayout()
+    - GridLayout(int rows, int cols)
+    - GridLayout(int rows, int cols, int hGap, int vGap)
+        - rows: 격자의 행수(디폴트: 1)
+        - cols: 격자의 열수(디폴트: 1)
+        - hGap: 좌우 두 컴포넌트 사이의 수평 간격, 픽셀 단위(디폴트: 0)
+        - vGap: 상하 두 컴포넌트 사이의 수직 간격, 픽셀 단위(디폴트: 0)
+        - rows x cols: 만큼의 셀을 가진 격자로 컨테이너 공간을 분할, 배치
+
+**배치관리자가 없는 컨테이너**
+- 배치관리자가 없는 컨테이너가 필요한 경우
+    - 응용프로그램에서 직접 컴포넌트의 크기와 위치를 결정하고자 하는 경우
+        1. 컴포넌트의 크기나 위치를 개발자 임의로 결정하고자 하는 경우
+        2. 게임 프로그램과 같이 시간이나 마우스/키보드의 입력에 따라 컴포넌트들의 위치와 크기가 수시로 변하는 경우
+        3. 여러 컴포넌트들이 서로 겹쳐 출력하고자 하는 경우
+
+- 컨테이너의 배치관리자 제거 방법
+    - container.setLayout(null);
+    ```java
+    JPanel p = new JPanel();
+    p.setLayout(null); // JPanel의 배치관리자 삭제
+    ```
+
+- 컨테이너의 배치관리자가 없어지면, 컴포넌트에 대한 어떤 배치도 없음
+    - 추가된 컴포넌트의 크기가 0으로 설정, 위치는 예측할 수 없게 된
+    ```java
+    // 패널 p에는 배치관리자가 없으면 아래 두 버튼은 배치되지 않는다
+
+    p.add(new JButton("click")); // 폭과 높이가 0인 상태로 화면에 보이지 않는다.
+    p.add(new JButton("me!")); // 폭과 높이가 0인 상태로 화면에 보이지 않는다.
+    ```
+
+**컴포넌트의 절대 위치와 크기 설정**
+- 배치관리자가 없는 컨테이너에 컴포넌트를 삽입할 때
+    - 프로그램에서 컴포넌트의 절대 크기와 위치 설정
+    - 컴포넌트들이 서로 겹치게 할 수 있음
+
+- 컴포넌트의 크기와 위치 설정 메소드
+    - void setSize(int width, int height)
+    - void setLocation(int x, int y)
+    - void setBounds(int x, int y, int width, int height)
+
+<hr/>
+
 ## 5월 3일 강의
 > 내용 정리
 
@@ -133,6 +271,8 @@ JFrame을 상속받아 구현
 - 스윙 프레임(JFrame) 기본 구성
 Frame(java.awt.Frame), 메뉴바(Menu Bar), 컨텐트팬(Content Pane)의 3공간으로 구성된다.
 
+<hr/>
+
 ## 4월 19일 강의
 > 내용 정리
 
@@ -254,6 +394,8 @@ final 필드
 
 메소드 오버라이딩(method overriding): 슈퍼 클래스와 서브 클래스의 메소드 사이에 발생하는 관계, 슈퍼 클래스에 선언된 메소드와 같은 이름, 같은 리턴 타입, 같은 매개 변수 리스트를 갖는 메소드를 서브 클래스에서 재작성하는 것
 
+<hr/>
+
 ## 4월 5일 강의
 > 내용 정리
 
@@ -308,6 +450,8 @@ finally {
 - 메소드 오버라이딩(overriding): 부모 클래스에 구현된 메소드를, 자식 클래스에서 동일한 이름으로 자신의 특징에 맞게 다시 구현하는 것
 - 메소드 오버로딩(overloading): 클래스 내에서 이름이 같지만 서로 다르게 동작하는 메소드를 여러 개 만드는 것
 
+<hr/>
+
 ## 3월 29일 강의
 > 내용 정리
 
@@ -351,6 +495,8 @@ public class App {
     }
 }
 ```
+
+<hr/>
 
 ## 3월 15일 강의
 > 내용 정리
