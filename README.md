@@ -1,5 +1,356 @@
 # 이태규 학번 202330124
 
+## 5월 31일 강의
+> 내용 정리
+
+**자바의 GUI 프로그래밍 방법**
+- 자바의 GUI 프로그래밍 방법 2종류
+    1. 컴포넌트 기반 GUI 프로그래밍
+        - 스윙 컴포넌트를 이용하여 쉽게 GUI를 구축
+        - 자바에서 제공하는 컴포넌트의 한계를 벗어나지 못함
+    
+    2. 그래픽 기반 GUI 프로그래밍
+        - 그래픽을 이용하여 GUI구축
+        - 개발자가 직접 그래픽으로 화면을 구성하는 부담
+        - 독특한 GUI를 구성할 수 있는 장점
+        - GUI 처리의 실행 속도가 빨라, 게임 등에 주로 이용
+
+**스윙 컴포넌트의 공통 메소드, JComponent의 메소드**
+- JComponent
+    - 스윙 컴포넌트는 모두 상속받는 슈퍼 클래스, 추상 클래스
+    - 스윙 컴포넌트들이 상속받는 공통 메소드의 상수 구현
+    - JComponent의 주요 메소드 사례
+
+    ```java
+    컴포넌트의 모양과 관련된 메소드
+    void setForeGround(Color) // 전경색 설정
+    void setBackground(Color) // 배경색 설정
+    void setOpaque(boolean) // 불투명성 설정
+    void setFont(Font) // 폰트 설정
+    Font getFont() // 폰트 리턴
+    ```
+
+    ```java
+    컴포넌트의 위치와 크기에 관련된 메소드
+    int getWidth() // 폭 리턴
+    int getHeight() // 높이 리턴
+    int getX() // x 좌표 리턴
+    int getY() // y 좌표 리턴
+    Point getLocationOnScreen() // 스크린 좌표상에서의 컴포넌트 좌표
+    void setLocation(int, int) // 위치 지정
+    void setSize(int, int) // 크기 지정
+    ```
+
+    ```java
+    컴포넌트의 상태와 관련된 메소드
+    void setEnabled(boolean) // 컴포넌트 활성화 / 비활성화
+    void setVisible(boolean) // 컴포넌트 보이기 / 숨기기
+    boolean isVisible() // 컴포넌트의 보이는 상태 리턴
+    ```
+
+    ```java
+    컨테이너를 위한 메소드
+    Component add(Component) // 자식 컴포넌트 추가
+    void remove(Component) // 자식 컴포넌트 제거
+    void removeAll() // 모든 자식 컴포넌트 제거
+    Component[] getComponents() // 자식 컴포넌트 배열 리턴
+    Container getParent() // 부모 컨테이너 리턴
+    Container getTopLeveLAncestor() // 최상위 부모 컨테이너 리턴
+    ```
+
+**JLabel로 문자열과 이미지 출력**
+- JLabel의 용도
+    - 문자열이나 이미지를 화면에 출력하기 위한 목적
+
+- 레이블 생성
+    ```java
+    JLabel() // 빈 레이블
+    JLabel(Icon image) // 이미지 레이블
+    JLabel(String text) // 문자열 레이블
+    JLabel(String text, Icon image, int hAlign) // 문자열과 이미지 모두 가진 레이블
+    // hAlign: 수평 정렬 값으로 SwingConstants.LEFT, SwingConstant.RIGHT, SwingConstants.CENTER 중 하나
+    ```
+
+**레이블 생성 예**
+- 문자열 레이블 생성
+    ```java
+    JLabel textLabel = new JLabel("사랑합니다");
+    ```
+
+- 이미지 레이블 생성
+    - 이미지 파일로부터 이미지를 읽기 위해 ImageIcon 클래스 사용
+    - 다룰 수 있는 이미지: png, git, jpg
+        - sunset.jpg의 경로명이 "images/sunset.jpg"인 경우
+            ```java
+            ImageIcon image = new ImageIcon("images/sunset.jpg");
+            JLabel imageLabel = new JLabel(image);
+            ```
+
+- 수평 정렬 값을 가진 레이블 컴포넌트 설정
+    - 수평 정렬로, 문자열과 이미지를 모두 가진 레이블
+        ```java
+        ImageIcon image = new ImageIcon("images/sunset.jpg");
+        JLabel label = new JLabel("사랑합니다", image, SwingConstants.CENTER);
+        ```
+
+**JButton으로 버튼 만들기**
+- JButton의 용도
+    - 버튼 모양의 컴포넌트. 사용자들로부터 명령을 입력 받기 위한 목적
+    - 버튼은 클릭될 때 Action 이벤트 발생
+
+- 버튼 생성
+    ```java
+    JButton() // 빈 버튼
+    JButton(Icon image) // 이미지 버튼
+    JButton(String text) // 문자열 버튼
+    JButton(String text, Icon image) // 문자열과 이미지 모두 가진 버튼
+    ```
+
+    - "hello" 문자열을 가진 버튼 생성 예
+        ```java
+        JButton btn = new JButton("hello");
+        ```
+
+**이미지 버튼 만들기**
+- 하나의 버튼에 3개의 이미지 등록
+    - 마우스 조작에 따라 3개의 이미지 중 적잘한 이미지 자동 출력
+
+- 3개의 버튼 이미지
+    1. normalIcon
+        - 버튼의 보통 상태(디폴트) 때 출력되는 이미지
+        - 생성자에 이미지 아이콘 전달 혹은 JButton의 setIcon(normalIcon);
+
+    2. rolloverIcon
+        - 버튼에 마우스가 올라갈 때 출력되는 이미지
+        - 이미지 설정 메소드: JButton의 setRolloverIcon(rolloverIcon);
+
+    3. pressedIcon
+        - 버튼을 누른 상태 때 출력되는 이미지
+        - 이미지 설정 메소드: JButton의 setPressedIcon(pressedIcon);
+
+**이미지 버튼에 이미지 설정**
+- 이미지 로딩
+    - 필요한 이미지 로딩: new ImageIcon(이미지 경로명);
+    - 사례)
+        ```java
+        ImageIcon normalIcon = new ImageIcon("images/normalIcon.gif");
+        ImageIcon rolloverIcon = new ImageIcon("images/rolloverIcon.gif");
+        ImageIcon pressedIcon = new ImageIcon("images/pressedIcon.gif");
+        ```
+
+- 버튼에 이미지 등록
+    - JButton의 메소드를 호출하여 이미지 등록
+    - 사례)
+        ```java
+        JButton button = new JButton("테스트버튼", normalIcon); // normalIcon 달기
+        button.setRolloverIcon(rolloverIcon); // rolloverIcon 달기
+        button.setPressedIcon(pressedIcon); // pressedIcon 달기
+        ```
+
+    - 실행 중에 normal 이미지(디폴트 이미지) 교체 사례
+        ```java
+        ImageIcon newIcon = new ImageIcon("images/newIcon.gif");
+        button.setIcon(newIcon); // 디폴트 이미지 변경
+        ```
+
+**체크박스에 Item 이벤트 처리**
+- Item 이벤트
+    - 체크 박스의 선택 상태에 변화가 생길 때 발생하는 이벤트
+        - 사용자가 마우스나 키보드로 체크박스를 선택 / 해제할 때
+        - 프로그램에서 체크박스를 선택 / 해제하여 체크 상태에 변화가 생길 때
+            ```java
+            JCheckBox c = new JCheckBox("사과");
+            c.setSelected(true); // 선택 상태로 변경
+            ```
+    - 이벤트가 발생하면 ItemEvent 객체 생성
+    - ItemListener 리스너를 이용하여 이벤트 처리
+
+- ItemListener 리스너의 추상 메소드
+    ```java
+    void itemStateChanged(ItemEvent e) // 체크박스의 선택 상태가 변하는 경우 호출
+    ```
+
+- ItemEvent의 주요 메소드
+    ```java
+    int getStateChange() // 체크박스가 선택된 경우 ItemEvent.SELECTED를, 해제된 경우 ItemEvent.DESELECTED를 리턴한다.
+    Object getItem() // 이벤트를 발생시킨 아이템 객체를 리턴한다. 체크박스의 경우 JCheckBox 컴포넌트의 레퍼런스를 리턴한다.
+    ```
+
+**JRadioButton으로 라디오버튼 만들기**
+- JRadioButton의 용도
+    - 버튼 그룹을 형성하고, 그룹에 속한 버튼 중 하나만 선택되는 라디오버튼
+    - 체크박스와의 차이점
+        - 체크 박스는 각각 선택 / 해제가 가능하지만, 라디오버튼은 그룹에 속한 버튼 중 하나만 선택
+
+- 라디오버튼 생성
+    ```java
+    JRadioButton() // 빈 라디오버튼
+    JRadioButton(Icon image) // 이미지 라디오버튼
+    JRadioButton(Icon image, boolean selected) // 이미지 라디오버튼
+    JRadioButton(String text) // 문자열 라디오버튼
+    JRadioButton(String text, boolean selected) // 문자열 라디오버튼
+    JRadioButton(String text, Icon image) // 문자열과 이미지를 가진 라디오버튼
+    JRadioButton(String text, Icon image, boolean selected) // 문자열과 이미지를 가진 라디오버튼
+    // selected: true면 선택 상태로 초기화
+    ```
+
+**라디오버튼 생성 및 Item 이벤트 처리**
+- 버튼 그룹과 라디오버튼 생성 과정
+    1. 버튼 그룹 객체 생성
+    2. 라디오버튼 생성
+    3. 라디오버튼을 버튼 그룹에 삽입
+    4. 라디오버튼을 컨테이너에 삽입
+        ```java
+        ButtonGroup group = new ButtonGroup();
+
+        JRadioButton apple = new JRadioButton("사과");
+        JRadioButton pear = new JRadioButton("배");
+        JRadioButton cherry = new JRadioButton("체리");
+
+        group.add(apple);
+        group.add(pear);
+        group.add(cherry);
+
+        container.add(apple);
+        container.add(pear);
+        container.add(cherry);
+        ```
+
+- 라디오버튼에 Item 이벤트 처리: ItemListener 리스너 이용
+    - 라디오버튼이 선택 / 해제되어 상태가 달리지면, Item 이벤트 발생
+        - 사용자가 마우스나 키보드로 선택 상태를 변경할 때
+        - 프로그램에서 JRadioButton의 setSelected()를 호출하여 선택 상태를 변경할 때
+
+**JTextField로 한 줄 입력 창 만들기**
+- JTextField
+    - 한 줄의 문자열을 입력 받는 창(텍스트필드)
+        - 텍스트 입력 도중 <Enter>키가 입력되면 Action 이벤트 발생
+        - 입력 가능한 문자 개수와 입력 창의 크기는 서로 다름
+
+- 텍스트필드 생성
+    ```java
+    JTextField() // 빈 텍스트필드
+    JTextField(int cols) // 입력 창의 열의 개수가 cols개인 텍스트필드
+    JTextField(String text) // text 문자열로 초기화된 텍스트필드
+    JTextField(String text, int cols) // 입력 창의 열이 개수는 cols개이고 text 문자열로 초기화된 텍스트 필드
+    ```
+    - "컴퓨터공학과"로 초깃값을 가지는 텍스트필드 생성 예
+        ```java
+        JTextField tf2 = new JTextField("컴퓨터공학과");
+        ```
+
+**TextArea로 여러 줄의 입력 창 만들기**
+- JTextArea
+    - 여러 줄의 문자열을 입력받을 수 있는 창(텍스트영역)
+        - 스크롤바를 지원하지 않는다.
+        - JScrollPane 객체에 삽입하여 스크롤바 지원받음
+
+- 생성자
+    ```java
+    JTextArea() // 빈 텍스트영역
+    JTextArea(int rows, int cols) // 입력 창이 rows x cols개의 문자 크기인 텍스트영역
+    JTextArea(String text) // text 문자열로 초기화된 텍스트영역
+    JTextArea(Stirng text, int rows, int cols) // 입력 창이 rows x cols개의 문자 크기이며 text 문자열로 초기화된 텍스트영역
+    ```
+
+**JList<E>**
+- JList<E>
+    - 하나 이상의 아이템을 보여주고 아이템을 선택하도록 하는 리스트
+    - Java 7부터 제네릭 리스트로 바뀜
+        - <E>에 지정된 타입의 객체만 저장하는 리스트
+    - JScrollPane에 JList<E>를 삽입하여 스크롤 가능
+
+- 리스트 생성
+    ```java
+    JList<E>() // 빈 리스트
+    JList<E>(Vector listData) // 벡터로부터 아이템을 공급받는 리스트
+    JList<E>(Object[] listData) // 배열로부터 아이템을 공급받는 리스트
+    ```
+
+    - 예) 9개의 과일 이름 문자열이 든 리스트 만들기
+        ```java
+        String[] fruits = {"apple", "banana", "kiwi", "mango", "pear", "peach", "berry", "strawberry", "blackberry"};
+
+        JList<String> strList = new JList<String>(fruits);
+        ```
+
+**JComboBox**
+- JComboBox<E>
+    - 텍스트필드와 버튼, 그리고 드롭다운 리스트로 구성되는 콤보박스
+    - 드롭다운 리스트에서 선택한 것이 텍스트필드에 나타남
+
+- 콤보박스 생성
+    ```java
+    JComboBox<E>() // 빈 콤보박스
+    JComboBox<E>(Vector listData) // 벡터로부터 아이템을 공급받는 콤보박스
+    JComboBox<E>(Object[] listData) // 배열로부터 아이템을 공급받는 콤보박스
+    ```
+
+    - 예) 텍스트를 아이템으로 가진 콤보박스 생성
+        ```java
+        String[] fruits = {"apple", "banana", "kiwi", "mango", "pear", "peach", "berry", "strawberry", "blackberry"};
+
+        JComboBox<String> combo = new JComboBox<String>(fruits);
+        ```
+
+**메뉴 구성**
+- 메뉴 만들기에 필요한 스윙 컴포넌트
+    - 메뉴아이템 - JMenuItem
+    - 메뉴 - JMenu
+        - 여러 개의 메뉴아이템을 가짐
+    - 메뉴바 - JMenuBar
+        - 여러 개의 메뉴를 붙이는 바이며, 프레임에 부탁됨
+    - 분리선
+        - 메뉴아이템 사이의 분리선으로 separator라고 부름
+        - JMenu의 addSeparator()를 호출하여 삽입함
+
+**메뉴 만드는 과정**
+1. JMenuBar 컴포넌트 생성
+2. JMenu 컴포넌트를 생성하여 JMenuBar에 붙인다.
+3. JMenuItem 컴포넌트를 생성하여 JMenu에 붙인다, 여러 개의 메뉴와 메뉴 아이템을 생성한다.
+4. JMenuBar 컴포넌트를 JFrame에 붙인다.
+    ```java
+    JMenuBar mb = new JMenuBar();
+
+    JMenu screenMenu = new JMenu("Screen");
+    mb.add(screenMenu);
+
+    screenMenu.add(new JMenuItem("Load"));
+    screenMenu.add(new JMenuItem("Hide"));
+    screenMenu.add(new JMenuItem("ReShow"));
+    screenMenu.addSeparator();
+    screenMenu.add(new JMenuItem("EXIT"));
+
+    frame.setJMenuBar(mb);
+    ```
+
+**메뉴아이템에 Action 이벤트 달기**
+- 메뉴아이템을 클릭하면 Action 발생
+    - 메뉴아이템은 사용자로부터의 지시나 명령을 받는데 사용
+    - ActionListener 인터페이스로 리스너 작성
+    - 각 메뉴아이템마다 이벤트 리스너 설정
+
+    - 예) Load 메뉴아이템에 Action 리스너를 작성하는 경우
+        ```java
+        JMenuItem item = new JMenuItem("Load");
+        item.addActionListener(new MenuActionListener()); // 메뉴아이템에 Action 리스너 설정
+        screenMenu.add(item);
+
+        class MenuActionListener implements ActionListener {
+            public void actionPerformed(ActionEvent e) {
+                // 사용자가 Load 메뉴아이템을 선택하는 경우 처리할 작업 구현
+                ~
+            }
+        }
+        ```
+
+**다이얼로그 종류**
+1. 팝업 다이얼로그, JOptionPane
+2. 확인 다이얼로그
+3. 메시지 다이얼로그
+
+<hr/>
+
 ## 5월 24일 강의
 > 내용 정리
 
